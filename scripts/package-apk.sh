@@ -3,7 +3,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 mode="${1:-}"
 sdk_path="${ANDROID_HOME:-$(sed -n 's/^sdk.dir=//p' local.properties)}"
-signer="$sdk_path/build-tools/34.0.0/apksigner"
+signer="$sdk_path/build-tools/36.0.0/apksigner"
 version="$(sed -n "s/.*versionName '\([^']*\)'.*/\1/p" app/build.gradle | head -1)"
 case "$mode" in
   --local)

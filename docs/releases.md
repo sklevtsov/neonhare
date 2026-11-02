@@ -30,7 +30,7 @@ Checksums detect changed/corrupted downloads; they are not an independent signat
 | Development | `com.neonhare.game.debug` | Actions → successful run → Artifacts | Ephemeral CI debug key; 99 lives, numeric shortcuts; separate progress |
 | Local device build | `com.neonhare.game` | Private local file | Explicit existing developer key via `--local`; not a public stable release |
 
-Actions artifacts are ZIP downloads, require GitHub sign-in and expire after 14 days in this project. Extract the APK before installation. A fresh CI debug key may prevent an update over another debug build; use an emulator/disposable development profile, preserving any needed data first. This is why ordinary players should use Releases.
+Actions artifacts are ZIP downloads, require GitHub sign-in and expire after 7 days in this project. Extract the APK before installation. A fresh CI debug key may prevent an update over another debug build; use an emulator/disposable development profile, preserving any needed data first. This is why ordinary players should use Releases.
 
 ## One-time maintainer setup
 

@@ -64,7 +64,7 @@
 
 ## Сборка и разработка
 
-Нативный **Java + Android Canvas/SurfaceView**, симуляция с фиксированным шагом, без стороннего игрового движка. Нужны **JDK 17**, **Python 3.10+**, Android SDK platform **35**, build-tools **34.0.0** и platform-tools. Gradle нужной версии скачивает wrapper из репозитория.
+Нативный **Java + Android Canvas/SurfaceView**, симуляция с фиксированным шагом, без стороннего игрового движка. Нужны **JDK 17**, **Python 3.10+**, Android SDK platform **35**, build-tools **36.0.0** и platform-tools. Gradle нужной версии скачивает wrapper из репозитория.
 
 ```sh
 git clone https://github.com/sklevtsov/neonhare.git
