@@ -1,0 +1,89 @@
+name: Signed APK release draft
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag, e.g. v0.4.1
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  resolve:
+    runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.tag.outputs.value }}
+    steps:
+      - name: Validate tag
+        id: tag
+        env:
+          REQUESTED_TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        run: |
+          [[ "$REQUESTED_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]] || exit 2
+          printf 'value=%s\n' "$REQUESTED_TAG" >> "$GITHUB_OUTPUT"
+  verify:
+    needs: resolve
+    uses: ./.github/workflows/ci.yml
+    with:
+      release_ref: ${{ needs.resolve.outputs.tag }}
+  publish-draft:
+    needs: [resolve, verify]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: release
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ needs.resolve.outputs.tag }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.resolve.outputs.tag }}
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
+      - name: Check version and release notes
+        run: |
+          version="$(sed -n "s/.*versionName '\([^']*\)'.*/\1/p" app/build.gradle | head -1)"
+          tag_version="${RELEASE_TAG#v}"
+          [[ "${tag_version%%-*}" == "$version" ]] || { echo 'Tag and app version differ'; exit 2; }
+          [[ -f "docs/releases/$version.md" ]] || { echo 'Release notes are missing'; exit 2; }
+          printf 'APP_VERSION=%s\n' "$version" >> "$GITHUB_ENV"
+      - name: Sign using the persistent release identity
+        env:
+          KEYSTORE_BASE64: ${{ secrets.NEONHARE_KEYSTORE_BASE64 }}
+          NEONHARE_RELEASE_ALIAS: ${{ secrets.NEONHARE_RELEASE_ALIAS }}
+          NEONHARE_STORE_PASSWORD: ${{ secrets.NEONHARE_STORE_PASSWORD }}
+          NEONHARE_KEY_PASSWORD: ${{ secrets.NEONHARE_KEY_PASSWORD }}
+          NEONHARE_RELEASE_CERT_SHA256: ${{ secrets.NEONHARE_RELEASE_CERT_SHA256 }}
+        run: |
+          : "${KEYSTORE_BASE64:?Configure the release keystore secret first}"
+          export NEONHARE_RELEASE_KEYSTORE="$RUNNER_TEMP/neon-hare-release.jks"
+          trap 'rm -f "$NEONHARE_RELEASE_KEYSTORE"' EXIT
+          umask 077
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$NEONHARE_RELEASE_KEYSTORE"
+          ./scripts/package-apk.sh --release
+      - name: Create APK checksums
+        working-directory: app/build/outputs/apk/release
+        run: sha256sum "neon-hare-$APP_VERSION.apk" > SHA256SUMS
+      - name: Create reviewable release draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          extra=()
+          [[ "$RELEASE_TAG" != *-* ]] || extra+=(--prerelease)
+          gh release create "$RELEASE_TAG" \
+            "app/build/outputs/apk/release/neon-hare-$APP_VERSION.apk" \
+            app/build/outputs/apk/release/SHA256SUMS \
+            --verify-tag --draft "${extra[@]}" \
+            --title "Neon Hare $RELEASE_TAG" \
+            --notes-file "docs/releases/$APP_VERSION.md"

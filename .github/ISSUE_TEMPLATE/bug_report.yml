@@ -1,0 +1,30 @@
+name: Bug / Ошибка
+description: Report a reproducible gameplay or Android problem / Сообщить об ошибке
+title: '[Bug] '
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: What happened? / Что произошло?
+      description: Steps, expected and actual result, chapter and checkpoint. Avoid spoilers in the title.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Game version / Версия игры
+      placeholder: 0.4.1, debug/local/release
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device, Android, display, input / Устройство, Android, экран, управление
+      description: Model and versions only; no serial numbers or IP addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshot or sanitised error / Скриншот или очищенная ошибка
+      description: Remove personal information and device identifiers. Report security issues privately.

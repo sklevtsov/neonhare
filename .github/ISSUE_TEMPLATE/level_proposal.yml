@@ -1,0 +1,20 @@
+name: Level proposal / Идея главы
+description: Discuss a distinctive chapter before implementation / Обсудить новую главу
+body:
+  - type: textarea
+    id: design
+    attributes:
+      label: Chapter design / Дизайн главы
+      description: Setting, palette, main mechanic, route sketch, alternate route, secret, reward and story stakes.
+    validations:
+      required: true
+  - type: textarea
+    id: extension
+    attributes:
+      label: Content and engine needs / Контент и изменения движка
+      description: Existing rules to reuse, genuinely new systems, compatibility with old chapters and saves.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How to validate / Как проверять
+      description: Required skills, controller and touch passage, checkpoint recovery, possible softlocks.

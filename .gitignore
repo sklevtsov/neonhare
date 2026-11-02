@@ -1,35 +1,39 @@
-# Gradle files
+# Local IDE, SDK and generated output
 .gradle/
-build/
 .kotlin/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Log/OS Files
-*.log
-
-# Android Studio generated files and folders
-captures/
 .externalNativeBuild/
 .cxx/
-*.aab
-*.apk
+captures/
 output-metadata.json
-
-# IntelliJ
-*.iml
-.idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
-
-# Keystore files
-*.jks
-*.keystore
-
-# Google Services (e.g. APIs or Firebase)
 google-services.json
+.idea/
+.vscode/
+.DS_Store
+local.properties
+**/build/
+*.iml
+.android-dev/
+__pycache__/
+*.py[cod]
+.github/modernize/
 
-# Android Profiling
+# Private signing material and machine configuration
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+*.apk
+*.aab
+*.apks
+*.idsig
 *.hprof
+*.log
+
+# Local research copies and screenshots supplied as references
+/Jazz_Jackrabbit 2/
+/Снимок экрана*.png
+/Screenshot*.png
