@@ -30,7 +30,7 @@ case "$mode" in
     "$signer" verify --print-certs "$signed_candidate" > "$signing_dir/certificate.txt"
     expected="$(printf '%s' "$NEONHARE_RELEASE_CERT_SHA256" | tr '[:upper:]' '[:lower:]' | tr -d ':')"
     actual="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' "$signing_dir/certificate.txt")"
-    if [[ "$expected" != "$actual" ]] || rg -q 'CN=Android Debug' "$signing_dir/certificate.txt"; then
+    if [[ "$expected" != "$actual" ]] || grep -Fq 'CN=Android Debug' "$signing_dir/certificate.txt"; then
       echo 'Release certificate rejected; no distributable APK published.' >&2; exit 2
     fi
     destination="app/build/outputs/apk/release/neon-hare-$version.apk"

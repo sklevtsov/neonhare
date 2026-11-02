@@ -11,5 +11,5 @@ fi
 if NEONHARE_RELEASE_KEYSTORE=placeholder-release.jks NEONHARE_RELEASE_ALIAS=androiddebugkey NEONHARE_STORE_PASSWORD=contract-test NEONHARE_KEY_PASSWORD=contract-test NEONHARE_RELEASE_CERT_SHA256=00 ./scripts/package-apk.sh --release > build/security-checks/debug-key.txt 2>&1; then
   echo 'FAIL: public release accepted the debug alias'; exit 1
 fi
-rg -q 'refuses a debug' build/security-checks/debug-key.txt
+grep -Fq 'refuses a debug' build/security-checks/debug-key.txt
 printf 'PASS: explicit signing mode, missing release secrets and debug alias rejection\n'
