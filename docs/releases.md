@@ -58,7 +58,7 @@ In repository **Settings → Environments**, configure `release`. Restrict deplo
 
 Use a password manager/secure secret editor to transfer these values; do not paste them into issues, chats, source files or logs. Keep the expected fingerprint independently with the release records; changing both key and fingerprint must be a deliberate reviewed migration. Enable GitHub private vulnerability reporting under repository security settings. Consider main/tag rulesets and secret scanning appropriate to the public repository.
 
-The signing job refuses missing secrets, a debug alias/certificate and a mismatched certificate. It deletes the temporary decoded keystore after signing. Signing credentials are never passed to pull-request checks. No stable signing identity has been generated or committed by this preparation.
+The signing job refuses missing secrets, a debug alias/certificate and a mismatched certificate. It deletes the temporary decoded keystore after signing. Signing credentials are never passed to pull-request checks. A dedicated persistent release identity is now configured. Its public certificate SHA-256 is `08d2eb6428bb199c2cee42f3d754e31c82b8acda6da043d5c2617cdc3be70e04`. The private keystore and credentials are kept outside Git; the release environment stores encrypted secrets and permits version tags `v*`.
 
 ## Publish a version
 
@@ -74,7 +74,7 @@ git push origin v0.4.1
 4. `Signed APK release draft` runs the reusable build/gameplay checks, builds the tagged source afresh, signs with the pinned identity and creates a **draft** Release containing the APK and `SHA256SUMS`. The workflow can also be run manually for an existing version tag. Tags such as `v0.4.2-rc.1` create a pre-release draft.
 5. Review the draft, install the exact attached APK on target devices, add the certificate fingerprint/device results and publish through GitHub's Release editor. Until publication, normal users cannot download the draft. A failed workflow does not create a successful release; fix the cause and rerun deliberately.
 
-Do not force-move published version tags or overwrite a published APK. Ship a new version for corrections. Release notes remain editable for clarification. The initial public APK is pending the one-time key/secret setup and physical-device validation; a README download link alone is not a published release.
+Do not force-move published version tags or overwrite a published APK. Ship a new version for corrections. Release notes remain editable for clarification. The first public APK is an early pre-release validated on the emulator. Physical-device validation is required before calling a later candidate stable; a README download link alone is not a published release.
 
 ## Local commands
 

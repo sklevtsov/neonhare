@@ -10,7 +10,7 @@ Meet **Stu**, a green rabbit with a blaster and a pair of ears that can do more 
 
 [**APK downloads / Releases**](https://github.com/sklevtsov/neonhare/releases) · [Report a bug](https://github.com/sklevtsov/neonhare/issues/new/choose) · [Development plan](docs/development-plan.md)
 
-> **In development.** The campaign contains 12 playable prototype chapters; pacing, tutorials and balance are still being refined. The game currently uses **Russian** text. An English game version is planned. Public signed APK distribution requires the one-time release-key setup described below; until the first release is published, Releases may be empty.
+> **In development.** The campaign contains 12 playable prototype chapters; pacing, tutorials and balance are still being refined. The game currently uses **Russian** text. An English game version is planned. Signed APKs are distributed through Releases. The first public build is an early pre-release.
 
 ## A rabbit, a broken world and a second chance
 
