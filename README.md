@@ -113,5 +113,3 @@ Next priorities: polish chapters 1–3, then design the **Night Postal Hub** wit
 ## Licence and artwork
 
 Project source code is available under the [MIT licence](LICENSE), except third-party components with their own terms. **Game art, icons, screenshots and promotional images are excluded from MIT**; no reuse licence is granted for them. See [artwork terms](ASSETS-LICENSE.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
-
-Neon Hare is an independent project inspired by classic action platformers. It is not affiliated with Epic Games or Jazz Jackrabbit. Original-game reference copies and screenshots are not included in this repository.
