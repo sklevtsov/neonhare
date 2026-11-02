@@ -64,7 +64,7 @@ Release and press jump again for the second jump. Ears unlock automatically afte
 
 ## Build and develop
 
-Native **Java + Android Canvas/SurfaceView**, with a fixed-step simulation and no third-party runtime game engine. Requires **JDK 17**, **Python 3.10+**, Android SDK platform **35**, build-tools **34.0.0** and platform-tools. The Gradle wrapper downloads the pinned Gradle version.
+Native **Java + Android Canvas/SurfaceView**, with a fixed-step simulation and no third-party runtime game engine. Requires **JDK 17**, **Python 3.10+**, Android SDK platform **35**, build-tools **36.0.0** and platform-tools. The Gradle wrapper downloads the pinned Gradle version.
 
 ```sh
 git clone https://github.com/sklevtsov/neonhare.git

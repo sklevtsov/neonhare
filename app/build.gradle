@@ -5,8 +5,13 @@ plugins {
 android {
     namespace 'com.neonhare.game'
     compileSdk 35
+    // This module contains Java only; do not add Kotlin runtime libraries implicitly.
+    enableKotlin = false
 
-    buildFeatures { buildConfig true }
+    buildFeatures {
+        buildConfig true
+        resValues true
+    }
 
     buildTypes {
         debug {
